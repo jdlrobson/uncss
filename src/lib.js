@@ -231,11 +231,11 @@ function filterUnusedRules(pages, css, ignore, usedSelectors) {
  * @return {Promise}
  */
 module.exports = function uncss(pages, css, ignore) {
+    const allSelectors = getAllSelectors(css);
     return Promise.all(pages.map((page) => getUsedSelectors(page, css)))
     .then((usedSelectors) => {
         usedSelectors = _.flatten(usedSelectors);
         const filteredCss = filterUnusedRules(pages, css, ignore, usedSelectors);
-        const allSelectors = getAllSelectors(css);
         return [filteredCss, {
             /* Get the selectors for the report */
             all: allSelectors,
